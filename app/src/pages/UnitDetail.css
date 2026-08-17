@@ -1,0 +1,60 @@
+.unit-summary {
+    padding: 10px;
+}
+
+.status-card {
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.price-tag {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--ion-color-dark);
+}
+
+.status-content {
+    display: flex;
+    justify-content: center;
+}
+
+.tenant-card {
+    border-radius: 16px;
+    background: var(--ion-color-light);
+    box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--ion-color-medium);
+}
+
+.empty-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.payments-section {
+    padding: 0 20px 80px 20px;
+    /* Bottom padding for FAB */
+}
+
+.payments-section h3 {
+    margin-left: 10px;
+    font-weight: 600;
+    color: var(--ion-color-step-800);
+}
+
+.payment-item {
+    --background: transparent;
+    margin-bottom: 8px;
+    border-radius: 12px;
+}
+
+.payment-item.pending {
+    --background: rgba(var(--ion-color-warning-rgb), 0.1);
+}

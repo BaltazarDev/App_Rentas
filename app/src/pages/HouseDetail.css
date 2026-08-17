@@ -1,0 +1,71 @@
+.house-header-image {
+    position: relative;
+    height: 250px;
+}
+
+.house-header-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.house-header-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: 20px;
+    color: white;
+}
+
+.house-header-overlay h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.house-header-overlay p {
+    margin: 4px 0 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.segment-container {
+    padding: 10px;
+    background: var(--ion-background-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.unit-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ion-color-light);
+    color: var(--ion-color-medium);
+}
+
+.unit-avatar.occupied {
+    background: var(--ion-color-success-tint);
+    color: var(--ion-color-success);
+}
+
+.expenses-container {
+    padding: 16px;
+}
+
+.expense-amount {
+    font-weight: bold;
+    color: var(--ion-color-danger);
+}
+
+.add-expense-btn {
+    margin-top: 20px;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 60vh;
+}

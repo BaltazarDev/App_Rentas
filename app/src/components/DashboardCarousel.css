@@ -1,0 +1,17 @@
+.dashboard-carousel-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.carousel-card {
+    border-radius: 20px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.swiper-pagination-bullet-active {
+    background-color: var(--ion-color-primary);
+}
