@@ -4,6 +4,12 @@ import { IonApp, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, Ion
 import { IonReactRouter } from '@ionic/react-router';
 import { gridOutline, homeOutline, peopleOutline } from 'ionicons/icons';
 
+// Context
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+
+// Pages
+import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Houses from './pages/Houses';
 import HouseDetail from './pages/HouseDetail';
@@ -12,6 +18,7 @@ import Tenants from './pages/Tenants';
 import TenantForm from './pages/TenantForm';
 import HouseForm from './pages/HouseForm';
 import PaymentHistory from './pages/PaymentHistory';
+import UnitForm from './pages/UnitForm';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -29,15 +36,7 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
+/* Ionic Dark Mode Theme */
 import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
@@ -47,59 +46,56 @@ setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/dashboard">
-            <Dashboard />
-          </Route>
-          <Route exact path="/houses">
-            <Houses />
-          </Route>
-          <Route exact path="/houses/new">
-            <HouseForm />
-          </Route>
-          <Route exact path="/houses/edit/:id(\\d+)">
-            <HouseForm />
-          </Route>
-          <Route exact path="/houses/:id(\\d+)">
-            <HouseDetail />
-          </Route>
-          <Route exact path="/tenants">
-            <Tenants />
-          </Route>
-          <Route exact path="/tenants/new">
-            <TenantForm />
-          </Route>
-          <Route exact path="/tenants/edit/:id(\\d+)">
-            <TenantForm />
-          </Route>
-          <Route exact path="/payments/history">
-            <PaymentHistory />
-          </Route>
-          <Route exact path="/units/:id(\\d+)">
-            <UnitDetail />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/dashboard" />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="dashboard" href="/dashboard">
-            <IonIcon aria-hidden="true" icon={gridOutline} />
-            <IonLabel>Dashboard</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="houses" href="/houses">
-            <IonIcon aria-hidden="true" icon={homeOutline} />
-            <IonLabel>Propiedades</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tenants" href="/tenants">
-            <IonIcon aria-hidden="true" icon={peopleOutline} />
-            <IonLabel>Inquilinos</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
+    <AuthProvider>
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            {/* Public Login Route */}
+            <Route exact path="/login" component={Login} />
+
+            {/* Protected Routes */}
+            <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+            <ProtectedRoute exact path="/houses" component={Houses} />
+            <ProtectedRoute exact path="/houses/new" component={HouseForm} />
+            <ProtectedRoute exact path="/houses/edit/:id([0-9]+)" component={HouseForm} />
+            <ProtectedRoute exact path="/houses/:id([0-9]+)" component={HouseDetail} />
+            <ProtectedRoute exact path="/tenants" component={Tenants} />
+            <ProtectedRoute exact path="/tenants/new" component={TenantForm} />
+            <ProtectedRoute exact path="/tenants/edit/:id([0-9]+)" component={TenantForm} />
+            <ProtectedRoute exact path="/payments/history" component={PaymentHistory} />
+            <ProtectedRoute exact path="/units/new" component={UnitForm} />
+            <ProtectedRoute exact path="/units/edit/:id([0-9]+)" component={UnitForm} />
+            <ProtectedRoute exact path="/units/:id([0-9]+)" component={UnitDetail} />
+            
+            {/* Root redirect */}
+            <Route exact path="/" component={() => <Redirect to="/dashboard" />} />
+          </IonRouterOutlet>
+          
+          {/* Render TabBar only when we are not on the login page */}
+          <Route
+            path="/"
+            render={({ location }) =>
+              location.pathname !== '/login' ? (
+                <IonTabBar slot="bottom">
+                  <IonTabButton tab="dashboard" href="/dashboard">
+                    <IonIcon aria-hidden="true" icon={gridOutline} />
+                    <IonLabel>Dashboard</IonLabel>
+                  </IonTabButton>
+                  <IonTabButton tab="houses" href="/houses">
+                    <IonIcon aria-hidden="true" icon={homeOutline} />
+                    <IonLabel>Propiedades</IonLabel>
+                  </IonTabButton>
+                  <IonTabButton tab="tenants" href="/tenants">
+                    <IonIcon aria-hidden="true" icon={peopleOutline} />
+                    <IonLabel>Inquilinos</IonLabel>
+                  </IonTabButton>
+                </IonTabBar>
+              ) : null
+            }
+          />
+        </IonTabs>
+      </IonReactRouter>
+    </AuthProvider>
   </IonApp>
 );
 

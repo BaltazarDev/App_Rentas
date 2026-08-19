@@ -83,25 +83,33 @@ const HouseDetail: React.FC = () => {
                 </div>
 
                 {segment === 'units' && (
-                    <IonList className="units-list">
-                        {house.units && house.units.map((unit: any) => (
-                            <IonItemSliding key={unit.id}>
-                                <IonItem routerLink={`/units/${unit.id}`} detail={true}>
-                                    <IonAvatar slot="start" className={`unit-avatar ${unit.status}`}>
-                                        <IonIcon icon={unit.type === 'commercial' ? cashOutline : homeOutline} />
-                                    </IonAvatar>
-                                    <IonLabel style={{ whiteSpace: 'normal' }}>
-                                        <h2>{unit.name}</h2>
-                                        <p>{unit.status === 'occupied' && unit.tenant ? `Inquilino: ${unit.tenant.full_name}` : 'Disponible'}</p>
-                                        <p style={{ fontSize: '0.85em', color: '#666' }}>Renta: {formatMXN(unit.base_rent_cost)}</p>
-                                    </IonLabel>
-                                    <IonChip color={unit.status === 'occupied' ? 'success' : 'medium'}>
-                                        {unit.status === 'occupied' ? 'Ocupado' : 'Vacío'}
-                                    </IonChip>
-                                </IonItem>
-                            </IonItemSliding>
-                        ))}
-                    </IonList>
+                    <div className="units-container">
+                        <IonList className="units-list">
+                            {house.units && house.units.map((unit: any) => (
+                                <IonItemSliding key={unit.id}>
+                                    <IonItem routerLink={`/units/${unit.id}`} detail={true}>
+                                        <IonAvatar slot="start" className={`unit-avatar ${unit.status}`}>
+                                            <IonIcon icon={unit.type === 'commercial' ? cashOutline : homeOutline} />
+                                        </IonAvatar>
+                                        <IonLabel style={{ whiteSpace: 'normal' }}>
+                                            <h2>{unit.name}</h2>
+                                            <p>{unit.status === 'occupied' && unit.tenant ? `Inquilino: ${unit.tenant.full_name}` : 'Disponible'}</p>
+                                            <p style={{ fontSize: '0.85em', color: '#666' }}>Renta: {formatMXN(unit.base_rent_cost)}</p>
+                                        </IonLabel>
+                                        <IonChip color={unit.status === 'occupied' ? 'success' : 'medium'}>
+                                            {unit.status === 'occupied' ? 'Ocupado' : 'Vacío'}
+                                        </IonChip>
+                                    </IonItem>
+                                </IonItemSliding>
+                            ))}
+                        </IonList>
+                        <div style={{ padding: '15px' }}>
+                            <IonButton expand="block" fill="outline" onClick={() => history.push(`/units/new?house_id=${id}`)}>
+                                <IonIcon slot="start" icon={add} />
+                                Agregar Unidad
+                            </IonButton>
+                        </div>
+                    </div>
                 )}
 
                 {segment === 'expenses' && (

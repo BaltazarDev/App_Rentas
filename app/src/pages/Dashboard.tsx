@@ -6,8 +6,10 @@ import {
 } from '@ionic/react';
 import { 
     cashOutline, trendingUpOutline, trendingDownOutline, 
-    alertCircleOutline, addOutline, documentTextOutline 
+    alertCircleOutline, addOutline, documentTextOutline,
+    logOutOutline
 } from 'ionicons/icons';
+import { useAuth } from '../context/AuthContext';
 import { Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -34,6 +36,7 @@ ChartJS.register(
 
 const Dashboard: React.FC = () => {
     const history = useHistory();
+    const { logout } = useAuth();
     const [stats, setStats] = useState<any>(null);
     const [pending, setPending] = useState<any[]>([]);
     
@@ -41,6 +44,15 @@ const Dashboard: React.FC = () => {
     const [isTxModalOpen, setIsTxModalOpen] = useState(false);
     const [defaultTxType, setDefaultTxType] = useState<'payment' | 'expense'>('payment');
     const [selectedUnitId, setSelectedUnitId] = useState<string>('');
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            history.push('/login');
+        } catch (error) {
+            console.error('Error logging out', error);
+        }
+    };
 
     useIonViewWillEnter(() => {
         loadDashboardData();
@@ -126,6 +138,9 @@ const Dashboard: React.FC = () => {
                         <IonButton color="primary" onClick={() => history.push('/payments/history')}>
                             <IonIcon icon={documentTextOutline} slot="start" />
                             Historial
+                        </IonButton>
+                        <IonButton color="danger" onClick={handleLogout} title="Cerrar Sesión">
+                            <IonIcon icon={logOutOutline} slot="icon-only" />
                         </IonButton>
                     </IonButtons>
                 </IonToolbar>

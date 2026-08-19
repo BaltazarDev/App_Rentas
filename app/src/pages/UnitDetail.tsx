@@ -6,7 +6,7 @@ import {
     useIonViewWillEnter
 } from '@ionic/react';
 import { useParams, useHistory } from 'react-router-dom';
-import { person, add, cash, call, mail, time, checkmarkCircle, alertCircle } from 'ionicons/icons';
+import { person, add, cash, call, mail, time, checkmarkCircle, alertCircle, create } from 'ionicons/icons';
 import api from '../services/api';
 import TransactionModal from '../components/TransactionModal';
 import './UnitDetail.css';
@@ -46,6 +46,11 @@ const UnitDetail: React.FC = () => {
                         <IonBackButton defaultHref={`/houses/${unit.house_id || ''}`} />
                     </IonButtons>
                     <IonTitle>{unit.name}</IonTitle>
+                    <IonButtons slot="end">
+                        <IonButton onClick={() => history.push(`/units/edit/${id}`)}>
+                            <IonIcon slot="icon-only" icon={create} />
+                        </IonButton>
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
 

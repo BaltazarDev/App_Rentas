@@ -13,5 +13,38 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: rentas_backend
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: rent_control
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      SESSION_DRIVER: database
+      CACHE_STORE: database
+      QUEUE_CONNECTION: database
+
+  frontend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: rentas_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
 volumes:
   db_data:
