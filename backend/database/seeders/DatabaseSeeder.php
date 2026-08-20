@@ -15,10 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Administrador',
-            'email' => 'admin@rentas.com',
-            'password' => bcrypt('admin123'),
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@rentas.com'],
+            [
+                'name' => 'Administrador',
+                'password' => \Illuminate\Support\Facades\Hash::make('admin123'),
+            ]
+        );
     }
 }

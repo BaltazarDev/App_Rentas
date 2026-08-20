@@ -1,7 +1,6 @@
 services:
   mysql:
     image: mysql:8.0
-    container_name: rentas_db_prod
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -15,7 +14,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: rentas_backend_prod
     restart: always
     depends_on:
       - mysql
@@ -38,7 +36,6 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
-    container_name: rentas_frontend_prod
     restart: always
     depends_on:
       - backend
